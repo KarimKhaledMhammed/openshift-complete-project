@@ -1,0 +1,10 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: bookstore-backend-pdb
+  namespace: bookstore-project
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: bookstore-backend

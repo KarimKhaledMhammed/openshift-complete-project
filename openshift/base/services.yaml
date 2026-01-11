@@ -1,0 +1,63 @@
+# MySQL Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  labels:
+    app: bookstore
+    component: database
+spec:
+  ports:
+    - port: 3306
+      targetPort: 3306
+  selector:
+    app: bookstore
+    component: database
+---
+# Redis Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  labels:
+    app: bookstore
+    component: cache
+spec:
+  ports:
+    - port: 6379
+      targetPort: 6379
+  selector:
+    app: bookstore
+    component: cache
+---
+# Backend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  labels:
+    app: bookstore
+    component: backend
+spec:
+  ports:
+    - port: 3000
+      targetPort: 3000
+  selector:
+    app: bookstore
+    component: backend
+---
+# Frontend Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  labels:
+    app: bookstore
+    component: frontend
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: bookstore
+    component: frontend
