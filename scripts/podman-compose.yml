@@ -1,0 +1,71 @@
+version: "3.8"
+
+services:
+  # MySQL Database
+  mysql:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    image: bookstore-database:v1.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: securepassword123
+      MYSQL_DATABASE: bookstore
+      MYSQL_USER: bookstore
+      MYSQL_PASSWORD: securepassword123
+    ports:
+      - "3306:3306"
+    networks:
+      - bookstore-net
+    restart: unless-stopped
+
+  # Redis Cache
+  redis:
+    image: redis:7.0-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - bookstore-net
+    restart: unless-stopped
+
+  # Backend API (Node.js)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    image: bookstore-backend:v1.0
+    container_name: backend
+    environment:
+      DB_HOST: mysql
+      DB_USER: bookstore
+      DB_PASSWORD: securepassword123
+      DB_NAME: bookstore
+      REDIS_HOST: redis
+    ports:
+      - "3000:3000"
+    networks:
+      - bookstore-net
+    depends_on:
+      - mysql
+      - redis
+    restart: unless-stopped
+
+  # Frontend (Nginx)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    image: bookstore-frontend:v1.0
+    container_name: frontend
+    ports:
+      - "8080:8080"
+    networks:
+      - bookstore-net
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+networks:
+  bookstore-net:
+    driver: bridge
