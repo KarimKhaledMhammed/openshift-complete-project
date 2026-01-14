@@ -1,0 +1,19 @@
+# Frontend Development Dockerfile
+# Optimized for development
+
+FROM nginxinc/nginx-unprivileged:1.26-alpine
+
+# Copy custom configuration
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Copy static assets
+COPY ./html /usr/share/nginx/html
+
+# Switch to non-root user
+USER 101
+
+# Expose port
+EXPOSE 8080
+
+# Start nginx in foreground
+CMD ["nginx", "-g", "daemon off;"]

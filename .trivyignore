@@ -1,0 +1,15 @@
+# Trivy CVE Exceptions
+# This file documents acceptable CVE exceptions with justifications
+# All exceptions must be reviewed and approved by security team
+
+# Format:
+# CVE-YYYY-XXXXX - Brief description of why this is acceptable
+# Reviewed: YYYY-MM-DD, Reviewer: @username
+# Mitigation: Description of compensating controls
+
+# Example:
+# CVE-2023-12345 - No fix available for Node.js base image
+# Reviewed: 2026-01-11, Reviewer: @security-team
+# Mitigation: Network policies restrict external access, WAF in place
+
+# Add your documented exceptions below:

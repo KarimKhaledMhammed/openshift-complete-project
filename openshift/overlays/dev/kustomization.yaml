@@ -3,17 +3,16 @@ kind: Kustomization
 
 namespace: bookstore-project
 
+# Base configuration
 resources:
   - ../../base
-  - ../../security
-  - ../../autoscaling
 
-# Production-specific patches
+# Development-specific patches
 patches:
   - path: replicas-patch.yaml
   - path: resources-patch.yaml
 
-# Production-specific annotations
+# Development-specific annotations
 commonAnnotations:
-  environment: prod
+  environment: dev
   managed-by: kustomize

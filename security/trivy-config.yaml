@@ -1,0 +1,41 @@
+# Trivy Configuration File
+# Used for consistent security scanning across all images
+
+# Scan settings
+severity:
+  - CRITICAL
+  - HIGH
+  - MEDIUM
+
+# Vulnerability database
+db:
+  repository: ghcr.io/aquasecurity/trivy-db
+
+# Skip files/directories
+skip-files:
+  - "**/*.md"
+  - "**/test/**"
+  - "**/tests/**"
+  - "**/*.test.js"
+
+# Timeout settings
+timeout: 10m
+
+# Output format
+format: table
+
+# Exit code
+exit-code: 1 # Fail on vulnerabilities
+
+# Ignore unfixed vulnerabilities
+ignore-unfixed: false
+
+# Scan options
+scanners:
+  - vuln
+  - config
+  - secret
+
+# Secret scanning
+secret:
+  config: .trivyignore
